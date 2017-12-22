@@ -1,0 +1,60 @@
+{
+    "name": "dasprid/pikkuleipa",
+    "description": "PSR-7 JWT cookie handler",
+    "type": "library",
+    "require": {
+        "php": "^7.1",
+        "lcobucci/jwt": "^3.2",
+        "psr/http-message": "^1.0",
+        "dflydev/fig-cookies": "^1.0",
+        "cultuurnet/clock": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.5",
+        "psr/container": "^1.0",
+        "dasprid/treereader": "^1.3",
+        "zendframework/zend-diactoros": "^1.3",
+        "squizlabs/php_codesniffer": "^2.7"
+    },
+    "suggest": {
+        "psr/container": "For using the supplied factories",
+        "dasprid/treereader": "For using the supplied factories"
+    },
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Ben Scholzen 'DASPRiD'",
+            "homepage": "https://dasprids.de/",
+            "email": "mail@dasprids.de"
+        }
+    ],
+    "keywords": [
+        "jwt",
+        "cookie",
+        "session",
+        "http",
+        "psr",
+        "psr-7"
+    ],
+    "autoload": {
+        "psr-4": {
+            "DASPRiD\\Pikkuleipa\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DASPRiD\\PikkuleipaTest\\": "test/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs",
+            "@test"
+        ],
+        "coveralls": "php-coveralls",
+        "cs": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-clover clover.xml"
+    }
+}
