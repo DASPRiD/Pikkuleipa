@@ -87,7 +87,11 @@ final class TokenManager implements TokenManagerInterface
             return null;
         }
 
-        if (! $token->hasClaim('sub') || ! $token->hasClaim('iat') || ! $token->hasClaim('dat')) {
+        if (! $token->hasClaim('sub') ||
+            ! $token->hasClaim('ews') ||
+            ! $token->hasClaim('iat') ||
+            ! $token->hasClaim('dat')
+        ) {
             return null;
         }
 
