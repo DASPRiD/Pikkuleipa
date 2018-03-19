@@ -19,13 +19,19 @@ final class Cookie
     private $issuedAt;
 
     /**
+     * @var bool
+     */
+    private $endsWithSession;
+
+    /**
      * @var array
      */
     private $data = [];
 
-    public function __construct(string $name, ?DateTimeImmutable $issuedAt = null)
+    public function __construct(string $name, bool $endsWithSession = false, ?DateTimeImmutable $issuedAt = null)
     {
         $this->name = $name;
+        $this->endsWithSession = $endsWithSession;
         $this->issuedAt = $issuedAt ?: new DateTimeImmutable();
     }
 
@@ -36,9 +42,13 @@ final class Cookie
      *
      * @throws JsonException When an error occurs during decoding
      */
-    public static function fromJson(string $name, DateTimeImmutable $issuedAt, string $json) : self
-    {
-        $cookie = new self($name, $issuedAt);
+    public static function fromJson(
+        string $name,
+        bool $endsWithSession,
+        DateTimeImmutable $issuedAt,
+        string $json
+    ) : self {
+        $cookie = new self($name, $endsWithSession, $issuedAt);
         $cookie->data = json_decode($json, true);
 
         if (! is_array($cookie->data)) {
@@ -78,6 +88,14 @@ final class Cookie
     public function getIssuedAt() : DateTimeImmutable
     {
         return $this->issuedAt;
+    }
+
+    /**
+     * Returns whether the cookie will end with the user session.
+     */
+    public function endsWithSession() : bool
+    {
+        return $this->endsWithSession;
     }
 
     /**

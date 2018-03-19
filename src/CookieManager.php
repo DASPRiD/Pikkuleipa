@@ -73,7 +73,6 @@ final class CookieManager implements CookieManagerInterface
     public function setCookie(
         ResponseInterface $response,
         Cookie $cookie,
-        bool $endWithSession = false,
         bool $overwriteExpireCookie = true
     ) : ResponseInterface {
         $cookieName = $cookie->getName();
@@ -87,13 +86,16 @@ final class CookieManager implements CookieManagerInterface
         $setCookie = SetCookie::create($cookieName)
             ->withHttpOnly(true)
             ->withPath($cookieSettings->getPath())
-            ->withExpires($endWithSession ? null : $currentTimestamp + $cookieSettings->getLifetime())
+            ->withExpires($cookie->endsWithSession() ? null : $currentTimestamp + $cookieSettings->getLifetime())
             ->withSecure($cookieSettings->isSecure());
 
         return FigResponseCookies::set(
             $response,
             $setCookie->withValue(
-                $this->tokenManager->getSignedToken($cookie, $endWithSession ? null : $cookieSettings->getLifetime())
+                $this->tokenManager->getSignedToken(
+                    $cookie,
+                    $cookie->endsWithSession() ? null : $cookieSettings->getLifetime()
+                )
             )
         );
     }

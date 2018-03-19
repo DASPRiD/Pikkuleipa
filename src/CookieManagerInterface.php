@@ -27,7 +27,6 @@ interface CookieManagerInterface
     public function setCookie(
         ResponseInterface $response,
         Cookie $cookie,
-        bool $endWithSession = false,
         bool $overwriteExpireCookie = true
     ) : ResponseInterface;
 

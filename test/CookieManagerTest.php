@@ -25,8 +25,7 @@ class CookieManagerTest extends TestCase
         $originalResponse = new EmptyResponse();
         $newResponse = $cookieManager->setCookie(
             $originalResponse,
-            $cookie,
-            false
+            $cookie
         );
 
         $this->assertSame([
@@ -44,8 +43,7 @@ class CookieManagerTest extends TestCase
         $originalResponse = new EmptyResponse();
         $newResponse = $cookieManager->setCookie(
             $originalResponse,
-            $cookie,
-            false
+            $cookie
         );
 
         $this->assertSame([
@@ -55,7 +53,7 @@ class CookieManagerTest extends TestCase
 
     public function testSetCookieExpiringEndOfSession()
     {
-        $cookie = new Cookie('foo');
+        $cookie = new Cookie('foo', true);
         $tokenManager = $this->prophesize(TokenManagerInterface::class);
         $tokenManager->getSignedToken($cookie, null)->willReturn('bar');
         $cookieManager = $this->createCookieManager($tokenManager->reveal(), false);
@@ -63,8 +61,7 @@ class CookieManagerTest extends TestCase
         $originalResponse = new EmptyResponse();
         $newResponse = $cookieManager->setCookie(
             $originalResponse,
-            $cookie,
-            true
+            $cookie
         );
 
         $this->assertSame([
@@ -84,7 +81,6 @@ class CookieManagerTest extends TestCase
         $newResponse = $cookieManager->setCookie(
             $expireResponse,
             $cookie,
-            false,
             false
         );
 

@@ -60,6 +60,7 @@ final class TokenManager implements TokenManagerInterface
         $currentTimestamp = $this->clock->getDateTime()->getTimestamp();
         $builder = (new Builder())
             ->setIssuedAt($currentTimestamp)
+            ->set('ews', $cookie->endsWithSession())
             ->setSubject($cookie->getName())
             ->set('dat', $cookie->toJson());
 
@@ -93,6 +94,7 @@ final class TokenManager implements TokenManagerInterface
         try {
             return Cookie::fromJson(
                 $token->getClaim('sub'),
+                $token->getClaim('ews'),
                 new DateTimeImmutable('@' . $token->getClaim('iat')),
                 $token->getClaim('dat')
             );
