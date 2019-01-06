@@ -7,7 +7,7 @@
 [![License](https://poser.pugx.org/dasprid/pikkuleipa/license)](https://packagist.org/packages/dasprid/pikkuleipa)
 
 Pikkuleipa is a cookie manager for PSR-7 compliant applications, utilizing [JSON Web Tokens](https://jwt.io/) for
-security and allowing the handling of multiple independent cookies.authentication middleware embracing PSR-7.
+security and allowing the handling of multiple independent cookies.
 
 ## Installation
 
