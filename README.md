@@ -35,8 +35,33 @@ This will introduce a few factories, namely you can retrieve the following objec
 
 ### Configure Pikkuleipa
 
-For Pikkuleipa to function, it needs a few configuration variables. Copy the file `doc/example-config.php` and adjust the
-values as needed.
+For Pikkuleipa to function, it needs a few configuration variables and RSA key pair for signing JWTs. 
+
+1. Copy the file doc/example-config.php into `config/autoload/` directory and adjust the values as needed.
+
+2. Generate RSA key pair:
+
+```
+$ ssh-keygen -t rsa -b 4096 -f data/jwtRS256.key
+# Don't add passphrase
+$ openssl rsa -in data/jwtRS256.key -pubout -outform PEM -out data/jwtRS256.key.pub 
+```
+
+3. Add newly created keys to configuration file:
+
+```
+<?php
+return [
+    'pikkuleipa' => [
+        //...
+        'token' => [
+            //…            
+            'signature_key' => file_get_contents('data/jwtRS256.key'),
+            'verification_key' => file_get_contents('data/jwtRS256.key.pub'),
+        ],
+    ],
+];
+```
 
 ### Using the cookie manager
 
